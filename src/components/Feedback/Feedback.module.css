@@ -1,0 +1,26 @@
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 35px;
+}
+
+.btnFeedback {
+  display: flex;
+  width: 100px;
+  height: 45px;
+  font-size: 20px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-weight: 700;
+}
+
+.btnFeedback:hover {
+  color: #8ddfff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+}
