@@ -23,5 +23,5 @@ export const Feedback = ({ options, clickHandler }) => {
 
 Feedback.propTypes = {
   clickHandler: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  options: PropTypes.array.isRequired,
 };

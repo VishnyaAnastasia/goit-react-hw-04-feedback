@@ -27,9 +27,7 @@ export const App = () => {
   };
 
   const countTotalFeedback = () => {
-    const values = options.map(option => option.amount);
-    const summ = values.reduce((a, b) => a + b, 0);
-    return summ;
+    return options.reduce((accum, { amount }) => accum + amount, 0);
   };
 
   const countPositiveFeedbackPercentage = () => {
