@@ -1,76 +1,65 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 
 import { Section } from './Section/Section';
 import { Feedback } from './Feedback/Feedback';
 import { Statistics } from './Statistics/Statistics';
 import { Notification } from './Notification/Notification';
 
-export class App extends Component {
-  state = { good: 0, neutral: 0, bad: 0 };
+export const App = () => {
+  const initialState = [
+    { id: 1, name: 'good', amount: 0 },
+    { id: 2, name: 'neutral', amount: 0 },
+    { id: 3, name: 'bad', amount: 0 },
+  ];
 
-  clickHandler = event => {
-    this.setState(prevState => {
-      return {
-        [event.target.name]: prevState[event.target.name] + 1,
-      };
+  const [options, setOptions] = useState(initialState);
+
+  const clickHandler = ({ target: { name } }) => {
+    const newOptions = options.map(option => {
+      if (option.name === name) {
+        const newAmount = option.amount + 1;
+        const newOption = { ...option, amount: newAmount };
+        return newOption;
+      }
+      return option;
     });
+    setOptions(newOptions);
   };
 
-  countTotalFeedback = () => {
-    return Object.values(this.state).reduce((a, b) => a + b, 0);
+  const countTotalFeedback = () => {
+    const values = options.map(option => option.amount);
+    const summ = values.reduce((a, b) => a + b, 0);
+    return summ;
   };
 
-  feedbackOptions = () => {
-    return Object.keys(this.state);
-  };
-
-  countPositiveFeedbackPercentage = () => {
-    const { good } = this.state;
-    const { countTotalFeedback } = this;
+  const countPositiveFeedbackPercentage = () => {
     if (countTotalFeedback() === 0) {
       return 0;
     }
-    const result = (good / countTotalFeedback()) * 100;
+    const result = (options[0].amount / countTotalFeedback()) * 100;
     return result.toFixed(0);
   };
 
-  statisticsOptions = () => {
-    return this.state;
-  };
+  return (
+    <>
+      <Section title="Please leave feedback">
+        <Feedback clickHandler={clickHandler} options={options} />
+      </Section>
 
-  render() {
-    const {
-      clickHandler,
-      countTotalFeedback,
-      countPositiveFeedbackPercentage,
-      feedbackOptions,
-      statisticsOptions,
-    } = this;
-
-    return (
-      <>
-        <Section title="Please leave feedback">
-          <Feedback
-            clickHandler={clickHandler}
-            feedbackOptions={feedbackOptions}
+      {countTotalFeedback() !== 0 && (
+        <Section title="Statistics">
+          <Statistics
+            countTotalFeedback={countTotalFeedback}
+            options={options}
+            countPositiveFeedbackPercentage={countPositiveFeedbackPercentage}
           />
         </Section>
-
-        {countTotalFeedback() !== 0 && (
-          <Section title="Statistics">
-            <Statistics
-              statisticsOptions={statisticsOptions}
-              countTotalFeedback={countTotalFeedback}
-              countPositiveFeedbackPercentage={countPositiveFeedbackPercentage}
-            />
-          </Section>
-        )}
-        {countTotalFeedback() === 0 && (
-          <Section>
-            <Notification message="There is no feedback" />
-          </Section>
-        )}
-      </>
-    );
-  }
-}
+      )}
+      {countTotalFeedback() === 0 && (
+        <Section>
+          <Notification message="There is no feedback" />
+        </Section>
+      )}
+    </>
+  );
+};

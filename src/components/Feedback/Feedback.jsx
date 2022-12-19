@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './Feedback.module.css';
 
-export class Feedback extends Component {
-  render() {
-    const { clickHandler, feedbackOptions } = this.props;
-    return (
-      <div className={styles.btnContainer}>
-        {feedbackOptions().map(option => {
-          return (
-            <button
-              key={option}
-              className={styles.btnFeedback}
-              name={option}
-              onClick={clickHandler}
-            >
-              {option}
-            </button>
-          );
-        })}
-      </div>
-    );
-  }
-}
+export const Feedback = ({ options, clickHandler }) => {
+  return (
+    <div className={styles.btnContainer}>
+      {options.map(({ id, name }) => {
+        return (
+          <button
+            key={id}
+            className={styles.btnFeedback}
+            name={name}
+            onClick={clickHandler}
+          >
+            {name}
+          </button>
+        );
+      })}
+    </div>
+  );
+};
+
+Feedback.propTypes = {
+  clickHandler: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+};
