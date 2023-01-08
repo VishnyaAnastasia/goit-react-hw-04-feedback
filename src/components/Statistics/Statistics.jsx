@@ -9,22 +9,22 @@ export const Statistics = ({
 }) => {
   return (
     <ul className={styles.statCont}>
-      {options.map(({ id, name, amount }) => (
-        <li key={id} className={styles.statInfo}>
-          <span className={styles.statInfoName}>{name}</span>
-          <span className={styles.statInfoResult}>{amount}</span>
+      {Object.keys(options).map(option => (
+        <li key={option} className={styles.statInfo}>
+          <span className={styles.statInfoName}>{option}</span>
+          <span className={styles.statInfoResult}>{options[option]}</span>
         </li>
       ))}
 
       <div className={styles.statInfoMore}>
         <li className={styles.statInfo}>
           <span className={styles.statInfoName}>Total</span>
-          <span className={styles.statInfoResult}>{countTotalFeedback()}</span>
+          <span className={styles.statInfoResult}>{countTotalFeedback}</span>
         </li>
         <li className={styles.statInfo}>
           <span className={styles.statInfoName}>Positive feedback</span>
           <span className={styles.statInfoResult}>
-            {countPositiveFeedbackPercentage()}%
+            {countPositiveFeedbackPercentage}%
           </span>
         </li>
       </div>

@@ -5,15 +5,15 @@ import styles from './Feedback.module.css';
 export const Feedback = ({ options, clickHandler }) => {
   return (
     <div className={styles.btnContainer}>
-      {options.map(({ id, name }) => {
+      {Object.keys(options).map(option => {
         return (
           <button
-            key={id}
+            key={option}
             className={styles.btnFeedback}
-            name={name}
+            name={option}
             onClick={clickHandler}
           >
-            {name}
+            {option}
           </button>
         );
       })}
